@@ -41,4 +41,22 @@ class OpenAIService
             ->make();
     }
 
+    public function formatMessages($content)
+    {
+        if (is_string($content)) {
+            $content = [
+                ['user', $content]
+            ];
+        }
+
+        return collect($content)
+            ->map(function ($message) {
+                return [
+                    'role' => $message[0],
+                    'content' => $message[1],
+                ];
+            })
+            ->all();
+    }
+
 }
