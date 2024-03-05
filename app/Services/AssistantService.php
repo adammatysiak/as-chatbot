@@ -91,7 +91,10 @@ class AssistantService implements OpenAICommunicator
 
     protected function getAnswer($result)
     {
-        return data_get($result, 'content.0.text.value', null);
+        if(data_get($result, 'role') == 'user')
+            return "I'm sorry. I couldn't find proper answer. Please try again.";
+
+        return data_get($result, 'content.0.text.value', "I'm sorry. Error occurred. Please try again.");
     }
 
     protected function getAssistantId()
